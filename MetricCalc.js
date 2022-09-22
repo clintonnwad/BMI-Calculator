@@ -9,21 +9,30 @@ export default function MetricCalc() {
   const [message, setMessage] = useState('');
 
   let calculateBMI = (e) => {
-    if( height === 0 || weight === 0 || !height || !weight )
+    if( height == 0 || weight == 0 || !height || !weight )
     {
+      // We use 'Alert' from the Alert API we imported to display the invalid message
       Alert.alert("Incomplete input supplied", "You need to enter a value for both Height AND Weight", [
         { text: "Ok" }
       ]);
     }else{
-      // Proceed with our calsulation.
-      // First, convert height to meters
+      // Proceed with our calculation.
+      // The formula is BMI = Weight(kg)/Height(meters)
+      // First, convert height to meters from cm
+      // then square the height
       let heightMeters = height / 100;
       let heightSquare = Math.pow(heightMeters, 2);
+
+      // Next, to get the BMI, 
+      // divide weight(kg) by height(m)
       let bmiCalc = weight / heightSquare;
 
+      // Approx to one decimal place
       setBmi( bmiCalc.toFixed(1) );
 
       // Now, for our logic
+      // This is for the text under the BMI 
+      // result
       if( bmiCalc < 18.5 ){
         setMessage("You are Underweight");
       }else if( bmiCalc >= 18.5 && bmiCalc <= 24.9 ){

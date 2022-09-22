@@ -10,13 +10,18 @@ export default function StandardCalc() {
   const [message, setMessage] = useState('');
 
   let calculateBMI = (e) => {
-    if( inches === 0 || weight === 0 || !inches || !weight )
+    if( feet === 0 || weight === 0 || !feet || !weight )
     {
-      Alert.alert("Incomplete input supplied", "You need to enter a value for both Height AND Weight", [
+      Alert.alert("Incomplete input supplied", "You need to enter a value for both Height (feet & inches) AND Weight", [
         { text: "Ok" }
       ]);
-    }else{
-      // Proceed with our calsulation.
+    }else if( feet == 0 && weight == 0 ){
+      Alert.alert("Invalid input(s)", "You have entered incorrect values for either Height (feet & inches) or Weight", [
+        { text: "Ok" }
+      ]);
+    }
+    else{
+      // Proceed with our calculation.
       // Formula for converting ft and inches to meters is
       // d(m) = d(ft) × 0.3048 + d(in) × 0.0254
       let heightMeters = feet * 0.3048 + inches * 0.0254;
@@ -26,8 +31,10 @@ export default function StandardCalc() {
       // Kilograms(kg)
       let weightKg = weight * 0.45359237;
 
+      // Now, we can proceed with calculating our BMI
       let bmiCalc = weightKg / heightSquare;
 
+      // Approx to one decimal place
       setBmi( bmiCalc.toFixed(1) );
 
       // Now, for our logic
